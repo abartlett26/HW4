@@ -1,5 +1,5 @@
 /*
- * *** YOUR NAME GOES HERE / YOUR SECTION NUMBER ***
+ * *** ANNIKA BARTLETT / 002 ***
  *
  * This hashMap object represents an over simplification of Java's implementation of HashMap within
  * Java's Collection Framework Library. You are to complete the following methods:
@@ -220,17 +220,32 @@ class myHashMap<K,V> {
      */
 
     public V remove(K key) {
+        // get index for the bucket where the key is
+        int index = getBucketIndex(key);
+        // find the head of the list
+        HashNode<K, V> current = bucket.get(index);
+        // initialize the previous value (dne bc head)
+        HashNode<K, V> prev = null;
 
-        /*
-         * ADD YOUR CODE HERE
-         *
-         * Review the code in the whole object to understand teh data structures layout.
-         * Additionally, review the method put() for inserting a new Key / Value pair into
-         * the HashMap. This method will do the opposite by removing an element. Do see
-         * the return value discussion in this method's prologue to make sure the correct
-         * return value is returned the invoking function based on the remove outcome.
-         */
-
+        // traverse through linked list
+        while (current != null) {
+            // if the current key is the key that needs to be removed
+            if (current.key.equals(key)) {
+                // if it is not the head
+                if (prev != null) {
+                    prev.next = current.next;
+                }
+                // if it is the head
+                else if (prev == null) {
+                    bucket.set(index, current.next);
+                }
+                // return deleted
+                return current.value;
+            }
+            // update to next node
+            prev = current;
+            current = current.next;
+        }
         return null;
     }
 
@@ -398,15 +413,26 @@ class myHashMap<K,V> {
      */
 
     public V replace(K key, V val) {
+        // get index for the bucket where the key is
+        int index = getBucketIndex(key);
+        // find the head of the list
+        HashNode<K, V> current = bucket.get(index);
 
-        /*
-         * ADD YOUR CODE HERE - DO NOT FORGET TO ADD YOUR NAME AT TOP OF FILE
-         *
-         * Make sure you return the proper value based on the outcome of this method's
-         * replace (see method's prologue above).
-         */
-
-        return val;
+        // traverse through linked list
+        while (current != null) {
+            // if the current key is the key that needs to be removed
+            if (current.key.equals(key)) {
+                // store original value
+                V oldValue = current.value;
+                // replace
+                current.value = val;
+                // return deleted
+                return oldValue;
+            }
+            // update to next node
+            current = current.next;
+        }
+        return null;
     }
 
     
@@ -426,14 +452,23 @@ class myHashMap<K,V> {
      */
 
     public boolean replace(K key, V oldVal, V newVal) {
+        // get index for the bucket where the key is
+        int index = getBucketIndex(key);
+        // find the head of the list
+        HashNode<K, V> current = bucket.get(index);
 
-        /*
-         * ADD YOUR CODE HERE
-         *
-         * This method should apply the precondition (aka, the Key already exists with the
-         * value 'oldval', and is so, it SHOULD call replace(K, V) for code reuse.
-         */
-
+        // traverse through linked list
+        while (current != null) {
+            // if the current key is the key that needs to be removed
+            if (current.key.equals(key) && current.value.equals(oldVal)) {
+                // replace
+                current.value = newVal;
+                // return deleted
+                return true;
+            }
+            // update to next node
+            current = current.next;
+        }
         return false;
     }
 
