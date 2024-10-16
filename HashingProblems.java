@@ -1,5 +1,5 @@
 /*
- * *** YOUR NAME GOES HERE / YOUR SECTION NUMBER ***
+ * *** ANNIKA BARTLETT / 002 ***
  *
  * This HashingProblems object contains three methods / problems that you must
  * complete utilize the HashMap object within the Java's Collection Framework Library.
@@ -41,7 +41,28 @@ class HashingProblems {
          * returning 0.0/0.0 IS correct (which would return a non-number).
          */
 
-         return 0.0 / 0.0;
+        // initalize total and count
+        int sum = 0;
+        int count = 0;
+
+        // for each key in the hashmap
+        for (int key : map.keySet()) {
+            // for each number in the array
+            for (int num : array)
+                // compare each key to the number
+                if (key == num) {
+                    // update values
+                    sum += map.get(key);
+                    count++;
+            }
+        }
+        
+        // if none are the same, return zero
+        if ((sum == 0) && (count == 0)) {
+            return 0.0 / 0.0;
+        }
+
+        return (double) sum / count;
   }
 
 
@@ -54,16 +75,18 @@ class HashingProblems {
 
   public ArrayList<String> odd(HashMap<Integer, String> map) {
     
-      ArrayList<String> result = new ArrayList<>();
+    ArrayList<String> result = new ArrayList<>();
 
-      /*
-       * ADD YOUR CODE HERE
-       *
-       * Hint: Consider iterating over the HashMap using the keySet method.
-       */
+    // for each key in the hashmap
+    for (int key : map.keySet()) {
+        // if key is odd
+        if (key % 2 != 0) {
+            // add value to array
+            result.add(map.get(key));
+        }
+    }
 
-
-      return result;
+    return result;
   }
 
 
@@ -105,12 +128,16 @@ class HashingProblems {
    */
 
   public int twoSums(int[] numbers, int k) {
+    HashSet<Integer> checked = new HashSet<>();
+    int count = 0;
 
-      /*
-       * ADD YOUR CODE HERE
-       */
-
-      return -1;
+    for (int num : numbers) {
+        if (checked.contains(num - k)) {
+            count++;
+        }
+        checked.add(num);
+    }
+    return count;
   }
 
 } /* end class HashingProblems */
